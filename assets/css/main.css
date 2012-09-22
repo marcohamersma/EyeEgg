@@ -202,12 +202,70 @@ samp {
 .clearfix:after {
   clear: both;
 }
+@font-face {
+  font-family: Sofia Pro;
+  src: url('/assets/fonts/SofiaProRegular.otf');
+}
+@font-face {
+  font-family: Sofia Pro;
+  font-weight: 600;
+  src: url('/assets/fonts/SofiaProBold.otf');
+}
+@font-face {
+  font-family: Sofia Pro;
+  font-weight: 300;
+  src: url('/assets/fonts/SofiaProLight.otf');
+}
+body {
+  font-family: "Sofia Pro";
+  min-width: 888px;
+  margin: 0px auto;
+  width: 100%;
+  background: url(/assets/images/bg.png);
+}
+header {
+  height: 96px;
+  margin-bottom: 24px;
+}
+.logo {
+  padding-left: 24px;
+  width: 336px;
+}
+.wrapper {
+  overflow: hidden;
+  width: 100%;
+  min-width: 1008px;
+}
 .browseUI__albumsContainer {
   list-style: none;
+  margin-left: -24px;
 }
 .albumBox {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   height: 312px;
   width: 312px;
   float: left;
-  margin: 0 24px 24px 0;
+  margin: 0 0 24px 24px;
+  position: relative;
+  opacity: 0.77;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.albumBox:hover,
+.albumBox .active {
+  opacity: 1;
+}
+.albumBox__title {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  color: rgba(46, 46, 46, 0.7);
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 0 0 35px rgba(255, 255, 255, 0.8);
 }
