@@ -216,6 +216,9 @@ samp {
   font-weight: 300;
   src: url('/assets/fonts/SofiaProLight.otf');
 }
+html {
+  overflow-x: hidden;
+}
 body {
   font-family: "Sofia Pro";
   margin: 0px auto;
@@ -229,8 +232,25 @@ header {
   margin-bottom: 24px;
   margin-top: 24px;
 }
+.header__form input {
+  display: block;
+  float: left;
+  height: 96px;
+  width: 648px;
+  outline: none;
+  border: 0px none;
+  background: rgba(255, 255, 255, 0.4) url(/assets/images/search.png) no-repeat 24px 50%;
+  font-size: 48px;
+  font-family: inherit;
+  color: #666666;
+  padding: 10px 0 0 72px;
+  vertical-align: center;
+  font-weight: 300;
+  text-transform: uppercase;
+}
 .logo {
-  width: 360px;
+  width: 336px;
+  float: left;
 }
 .wrapper {
   overflow: hidden;

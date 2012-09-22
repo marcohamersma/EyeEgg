@@ -60,7 +60,7 @@ var UI = (function() {
   };
 
   populateShowUI = function(albumID) {
-    showUI.html();
+    showUI.html("");
     var albumData     = albums[albumID],
         showContainer = $('<div class="showUI__container"></div>'),
         title         = $('<h1 class="albumHeader"></h1>');
@@ -84,6 +84,7 @@ var UI = (function() {
 
     });
     showContainer.appendTo(showUI);
+    $.scrollTo(0, 500);
   };
 
   return {
