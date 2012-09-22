@@ -4,12 +4,47 @@ var API = {
     var prefix = 'https://www.eyeem.com/api/v2/',
         suffix = '&client_id=9oe7w4ImoXQcEP94vTJEk8pJuT2st366&callback=?';
 
-    $.get( prefix + resource + suffix, function(data) {
+    // $.get( prefix + resource + suffix, function(data) {
+    $.getJSON('/test.json', function(data) {
       callback(data);
       console.log("Done");
     });
   }
 };
+
+var UI = (function() {
+  var container = $('#browseUI');
+  var albums = {};
+
+  var initialize = function(albumsData) {
+    var albumsContainer = $('<ul class="browseUI__albumsContainer"></ul>');
+    albums = albumsData;
+    albumsContainer.appendTo(container);
+
+    _.each(albumsData, function(album) {
+      var albumBox = $('<li class="albumBox"></li>');
+      var title    = $('<div class="albumBox__title"></div>');
+
+      albumBox.attr({
+        'data-name' : album.name,
+        'style'     : 'background-image: url(' + album.cover + ')'
+      });
+
+      title.html(album.name);
+      title.appendTo(albumBox);
+      albumBox = albumBox.appendTo(albumsContainer);
+
+      albums[URLify(album.name)] = album;
+      albums[URLify(album.name)].el = albumBox;
+    });
+
+
+  };
+
+  return {
+    initialize: initialize
+  };
+})();
 
 var EGG = (function() {
   var albums = {};
@@ -19,7 +54,7 @@ var EGG = (function() {
     mergeAlbums: true
   };
 
-  var filterImages = function(photos) {
+  var _filterImages = function(photos) {
     var maxAge = new Date().setDate(new Date().getDate()-options.maxDaysAgo);
 
     _.each(photos, function(photo) {
@@ -65,17 +100,18 @@ var EGG = (function() {
     return albums;
   };
 
-  this.initialize = function() {
+  var initialize = function() {
     var photoCollection;
 
     // Fetch the photos
     API.fetch('albums/17/photos?detailed=1&limit='+options.fetchLimit+'&includeAlbums=1', function(data) {
-      photoCollection = filterImages(data.photos.items);
-      console.log(photoCollection);
-      console.log("ok");
+      photoCollection = _filterImages(data.photos.items);
+      UI.initialize(photoCollection);
+      console.log(albums);
     });
-
-
   };
 
+  return {
+    initialize: initialize
+  };
 })();
