@@ -45,6 +45,12 @@ var UI = (function() {
         navigateToAlbum(album.eggID);
       });
     });
+
+    $('header .logo').click(function(e) {
+      e.preventDefault();
+      albumsContainer.removeClass('hidden');
+      showUI.addClass('hidden');
+    });
   };
 
   navigateToAlbum = function(albumID) {
