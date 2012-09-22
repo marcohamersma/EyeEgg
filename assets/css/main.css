@@ -218,27 +218,44 @@ samp {
 }
 body {
   font-family: "Sofia Pro";
-  min-width: 888px;
   margin: 0px auto;
-  width: 100%;
+  /*width: 100%;*/
+
+  width: 1008px;
   background: url(/assets/images/bg.png);
 }
 header {
   height: 96px;
   margin-bottom: 24px;
+  margin-top: 24px;
 }
 .logo {
-  padding-left: 24px;
-  width: 336px;
+  width: 360px;
 }
 .wrapper {
   overflow: hidden;
   width: 100%;
-  min-width: 1008px;
 }
 .browseUI__albumsContainer {
   list-style: none;
   margin-left: -24px;
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1;
+  -webkit-transition: all 400ms ease-in-out;
+  -moz-transition: all 400ms ease-in-out;
+  -ms-transition: all 400ms ease-in-out;
+  -o-transition: all 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
+}
+.browseUI__albumsContainer.hidden {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+}
+.uiContainer {
+  position: relative;
+}
+.uiContainer > div {
+  position: absolute;
 }
 .albumBox {
   -webkit-box-sizing: border-box;
@@ -249,13 +266,24 @@ header {
   float: left;
   margin: 0 0 24px 24px;
   position: relative;
-  opacity: 0.77;
+  overflow: hidden;
+  cursor: pointer;
+}
+.albumBox:hover .albumBox__image,
+.albumBox .active .albumBox__image {
+  opacity: 1;
+}
+.albumBox__image {
   background-size: cover;
   background-position: 50% 50%;
-}
-.albumBox:hover,
-.albumBox .active {
-  opacity: 1;
+  opacity: 0.77;
+  -webkit-filter: blur(13px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: -24px;
 }
 .albumBox__title {
   position: absolute;
@@ -268,4 +296,43 @@ header {
   text-transform: uppercase;
   font-weight: bold;
   text-shadow: 0 0 35px rgba(255, 255, 255, 0.8);
+  z-index: 1;
+}
+.albumHeader {
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+#showUI {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition: all 400ms ease-in-out;
+  -moz-transition: all 400ms ease-in-out;
+  -ms-transition: all 400ms ease-in-out;
+  -o-transition: all 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
+  width: 100%;
+}
+#showUI.hidden {
+  -webkit-transform: translate3d(100%, 0, 0);
+  opacity: 0;
+}
+.showUI__photo {
+  height: 216px;
+  float: left;
+  margin: 0 24px 24px 0;
+  display: block;
+}
+.showUI__photoEl {
+  display: block;
+  opacity: 0;
+  height: 100%;
+  -webkit-transition: opacity 400ms linear;
+  -moz-transition: opacity 400ms linear;
+  -ms-transition: opacity 400ms linear;
+  -o-transition: opacity 400ms linear;
+  transition: opacity 400ms linear;
+}
+.showUI__photoEl.loaded {
+  opacity: 1;
 }

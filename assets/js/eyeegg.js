@@ -13,31 +13,71 @@ var API = {
 };
 
 var UI = (function() {
-  var container = $('#browseUI');
-  var albums = {};
+  var container = $('#browseUI'),
+      showUI    = $('#showUI'),
+      albums = {},
+      albumsContainer,
+      navigateToAlbum,
+      populateShowUI;
 
   var initialize = function(albumsData) {
-    var albumsContainer = $('<ul class="browseUI__albumsContainer"></ul>');
+    albumsContainer = $('<ul class="browseUI__albumsContainer"></ul>');
     albums = albumsData;
     albumsContainer.appendTo(container);
 
     _.each(albumsData, function(album) {
       var albumBox = $('<li class="albumBox"></li>');
       var title    = $('<div class="albumBox__title"></div>');
+      var image    = $('<div class="albumBox__image"></div>');
 
-      albumBox.attr({
-        'data-name' : album.name,
-        'style'     : 'background-image: url(' + album.cover + ')'
-      });
+      image.css('background-image', 'url(' + album.cover_thumb + ')');
 
       title.html(album.name);
       title.appendTo(albumBox);
+      image.appendTo(albumBox);
       albumBox = albumBox.appendTo(albumsContainer);
 
       albums[URLify(album.name)] = album;
       albums[URLify(album.name)].el = albumBox;
+
+      albumBox.click(function(e) {
+        e.preventDefault();
+        navigateToAlbum(album.eggID);
+      });
     });
-    // TODO: add links
+  };
+
+  navigateToAlbum = function(albumID) {
+    albumsContainer.addClass('hidden');
+    populateShowUI(albumID);
+    showUI.removeClass('hidden');
+  };
+
+  populateShowUI = function(albumID) {
+    showUI.html();
+    var albumData     = albums[albumID],
+        showContainer = $('<div class="showUI__container"></div>'),
+        title         = $('<h1 class="albumHeader"></h1>');
+
+    title.html(albumData.name).appendTo(showUI);
+
+    _.each(albumData.photos, function(photo) {
+      photoContainer = $('<a class="showUI__photo" target="blank"></a>'),
+      photoEl        = $('<img class="showUI__photoEl">');
+
+      photoContainer.attr('href', photo.webUrl);
+      photoEl.attr({
+        src: photo.photoUrl,
+        alt: photo.caption
+      }).appendTo(photoContainer);
+
+      photoContainer.appendTo(showContainer);
+      photoEl.bind('load', function() {
+        $(this).addClass('loaded');
+      });
+
+    });
+    showContainer.appendTo(showUI);
   };
 
   return {
@@ -82,6 +122,7 @@ var EGG = (function() {
         if (!albums[albumID]) {
           albums[albumID] = tagAlbum;
           albums[albumID].photos = [];
+          albums[albumID].eggID = albumID;
         }
 
         albums[albumID].photos.push(photo);
@@ -93,7 +134,8 @@ var EGG = (function() {
         return {
           name: album.name,
           cover: album.photos[0].photoUrl,
-          first: album.photos[0].thumbUrl,
+          cover_thumb: album.photos[0].thumbUrl,
+          eggID: album.eggID,
           updated: album.updated,
           photos: album.photos
         };
@@ -110,7 +152,6 @@ var EGG = (function() {
     API.fetch('albums/17/photos?detailed=1&limit='+options.fetchLimit+'&includeAlbums=1', function(data) {
       photoCollection = _filterImages(data.photos.items);
       UI.initialize(photoCollection);
-      console.log(albums);
     });
   };
 

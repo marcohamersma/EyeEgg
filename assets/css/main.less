@@ -11,34 +11,51 @@
 @font-face { font-family: Sofia Pro; font-weight: 300; src: url('/assets/fonts/SofiaProLight.otf'); }
 
 @gridUnit: 24px;
+@animationSpeed: 400ms;
 
 body {
   font-family: "Sofia Pro";
-  min-width: 888px;
   margin: 0px auto;
-  width: 100%;
+  /*width: 100%;*/
+  width: 3 * (14 * @gridUnit);
   background: url(/assets/images/bg.png);
 }
 
 header {
   height: 4 * @gridUnit;
   margin-bottom: @gridUnit;
+  margin-top: @gridUnit;
 }
 
 .logo {
-  padding-left: @gridUnit;
-  width: 14 * @gridUnit;
+  width: 15 * @gridUnit;
 }
 
 .wrapper {
   overflow: hidden;
   width: 100%;
-  min-width: 3 * (14 * @gridUnit);
+
 }
 
 .browseUI__albumsContainer {
   list-style: none;
   margin-left: -@gridUnit;
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1;
+  .transition(all @animationSpeed ease-in-out);
+
+  &.hidden {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+}
+
+.uiContainer {
+  position: relative;
+}
+
+.uiContainer > div {
+  position: absolute;
 }
 
 .albumBox {
@@ -47,15 +64,26 @@ header {
   float: left;
   margin: 0 0 @gridUnit @gridUnit;
   position: relative;
-  opacity: 0.77;
-  background-size: cover;
-  background-position: 50% 50%;
+  overflow: hidden;
+  cursor: pointer;
 
   &:hover, .active {
-    opacity: 1
+    .albumBox__image { opacity: 1 }
   }
 }
 
+.albumBox__image {
+  background-size: cover;
+  background-position: 50% 50%;
+  opacity: 0.77;
+  -webkit-filter: blur(13px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: -@gridUnit;
+}
 
 .albumBox__title {
   position: absolute;
@@ -68,4 +96,42 @@ header {
   text-transform: uppercase;
   font-weight: bold;
   text-shadow: 0 0 35px rgba(255,255,255,0.8);
+  z-index: 1;
+}
+
+.albumHeader {
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: @gridUnit;
+}
+
+#showUI {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  .transition(all @animationSpeed ease-in-out);
+  width: 100%;
+
+  &.hidden {
+    -webkit-transform: translate3d(100%, 0, 0);
+    opacity: 0;
+  }
+}
+
+.showUI__photo {
+  height: 9 * @gridUnit;
+  float: left;
+  margin: 0 @gridUnit @gridUnit 0;
+  display: block;
+}
+
+.showUI__photoEl {
+  display: block;
+  opacity: 0;
+  height: 100%;
+
+  .transition(opacity @animationSpeed linear);
+
+  &.loaded {
+    opacity: 1;
+  }
 }
