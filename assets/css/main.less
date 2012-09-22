@@ -1,0 +1,21 @@
+// EyeEgg
+// Developed by Marco Hamersma
+// Designed by
+// @marcohamersma // marcohamersma.nl
+
+@import 'lib/reset';
+@import 'lib/mixins';
+
+@gridUnit: 24px;
+
+.browseUI__albumsContainer {
+  list-style: none;
+}
+
+.albumBox{
+  .square(13 * @gridUnit);
+  float: left;
+  margin: 0 @gridUnit @gridUnit 0;
+}
+
+.albumBox__title {}

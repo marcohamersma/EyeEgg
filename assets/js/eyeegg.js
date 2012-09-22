@@ -37,8 +37,7 @@ var UI = (function() {
       albums[URLify(album.name)] = album;
       albums[URLify(album.name)].el = albumBox;
     });
-
-
+    // TODO: add links
   };
 
   return {
@@ -51,6 +50,7 @@ var EGG = (function() {
   var options = {
     maxDaysAgo: 4,
     fetchLimit: 100,
+    minItems: 2,
     mergeAlbums: true
   };
 
@@ -89,15 +89,18 @@ var EGG = (function() {
     });
 
     albums = _.map(albums, function(album) {
-      return {
-        name: album.name,
-        cover: album.photos[0].photoUrl,
-        first: album.photos[0].thumbUrl,
-        updated: album.updated,
-        photos: album.photos
-      };
+      if (album.photos.length > options.minItems) {
+        return {
+          name: album.name,
+          cover: album.photos[0].photoUrl,
+          first: album.photos[0].thumbUrl,
+          updated: album.updated,
+          photos: album.photos
+        };
+      }
     });
-    return albums;
+
+    return _.compact(albums);
   };
 
   var initialize = function() {
