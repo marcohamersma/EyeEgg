@@ -13,6 +13,10 @@
 @gridUnit: 24px;
 @animationSpeed: 400ms;
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: "Sofia Pro";
   margin: 0px auto;
@@ -27,8 +31,26 @@ header {
   margin-top: @gridUnit;
 }
 
+.header__form input {
+  display: block;
+  float: left;
+  height: 4 * @gridUnit;
+  width: 27 * @gridUnit;
+  outline: none;
+  border: 0px none;
+  background: rgba(255,255,255,0.40) url(/assets/images/search.png) no-repeat @gridUnit 50%;
+  font-size: 48px;
+  font-family: inherit;
+  color: #666666;
+  padding: 10px 0 0 3*@gridUnit;
+  vertical-align: center;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
 .logo {
-  width: 15 * @gridUnit;
+  width: 14 * @gridUnit;
+  float: left;
 }
 
 .wrapper {
@@ -95,7 +117,7 @@ header {
   font-size: 24px;
   text-transform: uppercase;
   font-weight: bold;
-  text-shadow: 0 0 35px rgba(255,255,255,0.8);
+  text-shadow: 0 0 10px rgba(255,255,255,0.7);
   z-index: 1;
 }
 
