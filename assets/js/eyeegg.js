@@ -21,7 +21,7 @@ var UI = (function() {
       populateShowUI;
 
   var initialize = function(albumsData) {
-    albumsContainer = $('<ul class="browseUI__albumsContainer"></ul>');
+    albumsContainer = $('<ul class="browseUI__albumsContainer empty"></ul>').hide();
     albums = albumsData;
     albumsContainer.appendTo(container);
 
@@ -44,6 +44,8 @@ var UI = (function() {
         e.preventDefault();
         navigateToAlbum(album.eggID);
       });
+
+      albumsContainer.show().removeClass('empty');
     });
 
     $('header .logo').click(function(e) {

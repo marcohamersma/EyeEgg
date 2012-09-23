@@ -11,7 +11,7 @@
 @font-face { font-family: Sofia Pro; font-weight: 300; src: url('/assets/fonts/SofiaProLight.otf'); }
 
 @gridUnit: 24px;
-@animationSpeed: 400ms;
+@animationSpeed: 300ms;
 
 html {
   overflow-x: hidden;
@@ -70,10 +70,16 @@ header {
     -webkit-transform: translate3d(-100%, 0, 0);
     opacity: 0;
   }
+
+  &.empty {
+    -webkit-transform: translate3d(0, 0, 338px);
+    opacity: 0;
+  }
 }
 
 .uiContainer {
   position: relative;
+  -webkit-perspective: 800;
 }
 
 .uiContainer > div {
