@@ -4,8 +4,8 @@ var API = {
     var prefix = 'https://www.eyeem.com/api/v2/',
         suffix = '&client_id=9oe7w4ImoXQcEP94vTJEk8pJuT2st366&callback=?';
 
-    // $.get( prefix + resource + suffix, function(data) {
-    $.getJSON('/test.json', function(data) {
+    $.get( prefix + resource + suffix, function(data) {
+    // $.getJSON('/test.json', function(data) {
       callback(data);
       console.log("Done");
     });
@@ -16,6 +16,9 @@ var UI = (function() {
   var container = $('#browseUI'),
       showUI    = $('#showUI'),
       input     = $('.header__form input'),
+      introUI   = $('#introUI'),
+      header    = $('header'),
+      body      = $('body'),
       albums = {},
       albumsContainer,
       navigateToAlbum,
@@ -25,7 +28,15 @@ var UI = (function() {
     input.val(searchValue);
   };
 
-  var initialize = function(albumsData) {
+  var loadingState = function() {
+    body.addClass('loading');
+  };
+
+  var readyState = function() {
+    body.removeClass('loading');
+  };
+
+  var displayAlbums = function(albumsData) {
     albumsContainer = $('<ul class="browseUI__albumsContainer empty"></ul>').hide();
     albums = albumsData;
     albumsContainer.appendTo(container);
@@ -51,6 +62,19 @@ var UI = (function() {
       });
 
       albumsContainer.show().removeClass('empty');
+
+      introUI.fadeOut(300);
+      header.removeClass('intro');
+      $.scrollTo(0, 500);
+    });
+  };
+
+  var initialize = function(albumsData) {
+    $('.citylink').click(function(e) {
+      e.preventDefault();
+
+      EGG.fetchPhotosFromAlbum($(this).attr('data-album-id'));
+      updateSearch($(this).text());
     });
 
     $('header .logo').click(function(e) {
@@ -96,7 +120,10 @@ var UI = (function() {
 
   return {
     initialize: initialize,
-    updateSearch: updateSearch
+    updateSearch: updateSearch,
+    displayAlbums: displayAlbums,
+    loadingState :loadingState,
+    readyState : readyState
   };
 })();
 
@@ -174,7 +201,7 @@ var EGG = (function() {
       cityAlbum     = venueAlbum.location.cityAlbum;
       countryAlbum  = venueAlbum.location.countryAlbum;
 
-      _fetchPhotosFromAlbum(cityAlbum.id);
+      fetchPhotosFromAlbum(cityAlbum.id);
       UI.updateSearch(cityAlbum.name);
     });
   };
@@ -182,17 +209,21 @@ var EGG = (function() {
   var initialize = function() {
     var photoCollection;
     navigator.geolocation.getCurrentPosition(_getAlbumFromGeoLocation);
+      UI.initialize(photoCollection);
   };
 
-  var _fetchPhotosFromAlbum = function(albumno) {
+  var fetchPhotosFromAlbum = function(albumno) {
+    UI.loadingState();
     // Fetch the photos
     API.fetch('albums/' + albumno + '/photos?detailed=1&limit='+options.fetchLimit+'&includeAlbums=1', function(data) {
       photoCollection = _filterImages(data.photos.items);
-      UI.initialize(photoCollection);
+      UI.readyState();
+      UI.displayAlbums(photoCollection);
     });
   };
 
   return {
-    initialize: initialize
+    initialize: initialize,
+    fetchPhotosFromAlbum: fetchPhotosFromAlbum
   };
 })();

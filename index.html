@@ -18,20 +18,32 @@
 </head>
 <body>
   <div class="wrapper">
-    <header>
+    <header class="intro">
       <div class="logo border-box">
         <a href="/">
           <img src="/assets/images/logo.png" alt="EyeEGG, what's cracking where you are">
         </a>
       </div>
       <form action="" class="header__form">
-        <input type="text" value="" class="border-box">
+        <input type="text" value="" class="border-box" placeholder="Location Search">
       </form>
     </header>
   </div>
   <div class="uiContainer">
     <div id="browseUI"></div>
     <div id="showUI" class="hidden"></div>
+  </div>
+  <div id="introUI">
+    <div class="wrapper">
+      <a href="#" class="citylink" data-album-id="6651">Tokyo</a>
+      <a href="#" class="citylink" data-album-id="17">Berlin</a>
+      <a href="#" class="citylink" data-album-id="629">Amsterdam</a>
+      <a href="#" class="citylink" data-album-id="5435">New York City</a>
+      <a href="#" class="citylink" data-album-id="1419">London</a>
+      <a href="#" class="citylink" data-album-id="4778">Paris</a>
+    </div>
+
+    <span class="loadingText">Loading&hellip;</span>
   </div>
 
   <script type="text/javascript" src="/assets/js/eyeegg.js"></script>

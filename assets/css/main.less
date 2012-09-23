@@ -163,3 +163,74 @@ header {
     opacity: 1;
   }
 }
+
+.citylink {
+  display: inline-block;
+  color: #4f4b48;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 34px;
+  float: left;
+  margin-bottom: @gridUnit;
+  font-weight: bold;
+  min-width: 100% / 3;
+  .border-box;
+  padding-right: 2 * @gridUnit;
+
+  &:nth-child(3n) {
+    padding-right: 0;
+  }
+}
+
+#introUI {
+  position: absolute;
+  top: 11*@gridUnit;
+  left: 50%;
+  margin-left: -(27*@gridUnit)/2
+}
+
+#introUI, header.intro {
+  width: 27*@gridUnit;
+}
+
+.loadingText {
+  z-index: -2;
+  opacity: 0;
+  position: absolute;
+  top: 30%;
+  left: 0; right: 0;
+  font-weight: bold;
+  font-size: 48px;
+  text-shadow: 0 0 10px rgba(255,255,255,0.7);
+  .transition(opacity @animationSpeed ease-in-out);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+body.loading #introUI {
+  .loadingText {
+    opacity: 1;
+    z-index: 4;
+  }
+
+  .wrapper {
+    opacity: 0.1;
+  }
+}
+
+header.intro {
+  text-align: center;
+  margin: 0px auto;
+
+  .header__form input {
+    width: 100%;
+    margin-bottom: 3*@gridUnit;
+  }
+
+  .logo {
+    width: auto;
+    float: none;
+    margin-bottom: @gridUnit;
+    margin-top: @gridUnit;
+  }
+}
