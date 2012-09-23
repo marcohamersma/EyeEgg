@@ -68,6 +68,7 @@ var UI = (function() {
       albumsContainer.show().removeClass('empty');
 
       introUI.fadeOut(300);
+      showUI.addClass('hidden');
       header.removeClass('intro');
       // $.scrollTo(0, 500);
     });
