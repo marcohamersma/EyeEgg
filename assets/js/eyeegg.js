@@ -15,10 +15,15 @@ var API = {
 var UI = (function() {
   var container = $('#browseUI'),
       showUI    = $('#showUI'),
+      input     = $('.header__form input'),
       albums = {},
       albumsContainer,
       navigateToAlbum,
       populateShowUI;
+
+  var updateSearch = function(searchValue) {
+    input.val(searchValue);
+  };
 
   var initialize = function(albumsData) {
     albumsContainer = $('<ul class="browseUI__albumsContainer empty"></ul>').hide();
@@ -90,7 +95,8 @@ var UI = (function() {
   };
 
   return {
-    initialize: initialize
+    initialize: initialize,
+    updateSearch: updateSearch
   };
 })();
 
@@ -100,7 +106,8 @@ var EGG = (function() {
     maxDaysAgo: 4,
     fetchLimit: 100,
     minItems: 2,
-    mergeAlbums: true
+    mergeAlbums: true,
+    location: null
   };
 
   var _filterImages = function(photos) {
@@ -154,11 +161,32 @@ var EGG = (function() {
     return _.compact(albums);
   };
 
+  var _getAlbumFromGeoLocation = function(geoposition) {
+    var lat           = geoposition.coords.latitude,
+        lon           = geoposition.coords.longitude,
+        cityAlbum     = null,
+        venueAlbum    = null,
+        countryAlbum  = null;
+
+    // Fetch other albums
+    API.fetch('albums?geoSearch=nearbyVenues&lat=' + lat +'&lng=' + lon + '&limit=1', function(data) {
+      venueAlbum    = data.albums.items[0];
+      cityAlbum     = venueAlbum.location.cityAlbum;
+      countryAlbum  = venueAlbum.location.countryAlbum;
+
+      _fetchPhotosFromAlbum(cityAlbum.id);
+      UI.updateSearch(cityAlbum.name);
+    });
+  };
+
   var initialize = function() {
     var photoCollection;
+    navigator.geolocation.getCurrentPosition(_getAlbumFromGeoLocation);
+  };
 
+  var _fetchPhotosFromAlbum = function(albumno) {
     // Fetch the photos
-    API.fetch('albums/17/photos?detailed=1&limit='+options.fetchLimit+'&includeAlbums=1', function(data) {
+    API.fetch('albums/' + albumno + '/photos?detailed=1&limit='+options.fetchLimit+'&includeAlbums=1', function(data) {
       photoCollection = _filterImages(data.photos.items);
       UI.initialize(photoCollection);
     });
