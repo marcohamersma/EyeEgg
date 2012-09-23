@@ -298,6 +298,10 @@ header {
 .albumBox .active .albumBox__image {
   opacity: 1;
 }
+.albumBox:hover .albumBox__title,
+.albumBox .active .albumBox__title {
+  opacity: 1;
+}
 .albumBox__image {
   background-size: cover;
   background-position: 50% 50%;
@@ -316,11 +320,11 @@ header {
   width: 100%;
   text-align: center;
   vertical-align: middle;
-  color: rgba(46, 46, 46, 0.7);
+  color: rgba(30, 30, 30, 0.85);
   font-size: 24px;
   text-transform: uppercase;
   font-weight: bold;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 25px #ffffff;
   z-index: 1;
 }
 .albumHeader {
@@ -427,4 +431,8 @@ header.intro .logo {
   float: none;
   margin-bottom: 24px;
   margin-top: 24px;
+}
+body.loading .uiContainer #browseUI,
+body.loading .uiContainer #showUI {
+  opacity: 0.1;
 }

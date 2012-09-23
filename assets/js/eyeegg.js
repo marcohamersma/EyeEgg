@@ -37,6 +37,10 @@ var UI = (function() {
   };
 
   var displayAlbums = function(albumsData) {
+    if (albumsContainer) {
+      albumsContainer.remove();
+    };
+
     albumsContainer = $('<ul class="browseUI__albumsContainer empty"></ul>').hide();
     albums = albumsData;
     albumsContainer.appendTo(container);
@@ -65,7 +69,7 @@ var UI = (function() {
 
       introUI.fadeOut(300);
       header.removeClass('intro');
-      $.scrollTo(0, 500);
+      // $.scrollTo(0, 500);
     });
   };
 
@@ -96,7 +100,7 @@ var UI = (function() {
   };
 
   populateShowUI = function(albumID) {
-    showUI.html("");
+    showUI.html(" ");
     var albumData     = albums[albumID],
         showContainer = $('<div class="showUI__container"></div>'),
         title         = $('<h1 class="albumHeader"></h1>');
@@ -143,6 +147,7 @@ var EGG = (function() {
   };
 
   var _filterImages = function(photos) {
+    albums = {};
     var maxAge = new Date().setDate(new Date().getDate()-options.maxDaysAgo);
 
     _.each(photos, function(photo) {

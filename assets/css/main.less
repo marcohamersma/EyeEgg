@@ -96,7 +96,8 @@ header {
   cursor: pointer;
 
   &:hover, .active {
-    .albumBox__image { opacity: 1 }
+    .albumBox__image { opacity: 1; }
+    .albumBox__title { opacity: 1; }
   }
 }
 
@@ -119,11 +120,11 @@ header {
   width: 100%;
   text-align: center;
   vertical-align: middle;
-  color: rgba(46, 46, 46, 0.7);
+  color: rgba(30, 30, 30, 0.85);
   font-size: 24px;
   text-transform: uppercase;
   font-weight: bold;
-  text-shadow: 0 0 10px rgba(255,255,255,0.7);
+  text-shadow: 0 0 25px rgba(255,255,255,1);
   z-index: 1;
 }
 
@@ -232,5 +233,11 @@ header.intro {
     float: none;
     margin-bottom: @gridUnit;
     margin-top: @gridUnit;
+  }
+}
+
+body.loading .uiContainer {
+  #browseUI, #showUI {
+    opacity: 0.1;
   }
 }
