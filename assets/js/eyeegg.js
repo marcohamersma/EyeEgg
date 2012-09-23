@@ -140,7 +140,7 @@ var EGG = (function() {
   var albums = {};
   var options = {
     maxDaysAgo: 10,
-    fetchLimit: 700,
+    fetchLimit: 500,
     minItems: 2,
     mergeAlbums: true,
     location: null
