@@ -198,7 +198,7 @@ header {
   z-index: -2;
   opacity: 0;
   position: absolute;
-  top: 30%;
+  top: 13*@gridUnit;
   left: 0; right: 0;
   font-weight: bold;
   font-size: 48px;
@@ -208,13 +208,13 @@ header {
   text-align: center;
 }
 
-body.loading #introUI {
+body.loading{
   .loadingText {
     opacity: 1;
     z-index: 4;
   }
 
-  .wrapper {
+  #introUI .wrapper {
     opacity: 0.1;
   }
 }
