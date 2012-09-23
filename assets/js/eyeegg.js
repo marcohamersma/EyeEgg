@@ -139,8 +139,8 @@ var UI = (function() {
 var EGG = (function() {
   var albums = {};
   var options = {
-    maxDaysAgo: 4,
-    fetchLimit: 100,
+    maxDaysAgo: 10,
+    fetchLimit: 700,
     minItems: 2,
     mergeAlbums: true,
     location: null
@@ -196,6 +196,7 @@ var EGG = (function() {
     });
 
     return _.compact(albums);
+    // TODO: should report it if there are no good results
   };
 
   var _getAlbumFromGeoLocation = function(geoposition) {
