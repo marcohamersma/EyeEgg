@@ -82,6 +82,11 @@ var UI = (function() {
       albumsContainer.removeClass('hidden');
       showUI.addClass('hidden');
     });
+
+    input.parent().submit(function(e) {
+      e.preventDefault();
+      EGG.fetchPhotosFromCity(input.val());
+    });
   };
 
   navigateToAlbum = function(albumID) {
@@ -222,8 +227,16 @@ var EGG = (function() {
     });
   };
 
+  var fetchPhotosFromCity = function(cityName) {
+    UI.loadingState();
+    API.fetch('albums?q=' + cityName +'&geoSearch=city&limit=1&type=city', function(data) {
+      fetchPhotosFromAlbum(data.albums.items[0].id);
+    });
+  };
+
   return {
     initialize: initialize,
-    fetchPhotosFromAlbum: fetchPhotosFromAlbum
+    fetchPhotosFromAlbum: fetchPhotosFromAlbum,
+    fetchPhotosFromCity: fetchPhotosFromCity
   };
 })();
