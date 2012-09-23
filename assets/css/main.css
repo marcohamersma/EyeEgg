@@ -344,7 +344,7 @@ header {
 }
 #showUI.hidden {
   -webkit-transform: translate3d(100%, 0, 0);
-  opacity: 0;
+  opacity: 0 !important;
 }
 .showUI__photo {
   height: 216px;
